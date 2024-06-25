@@ -1,7 +1,7 @@
 import exp from 'constants';
 
 //Интерфейс для карточки продуктов
-export interface IItemsProduct {
+export interface IItemsProducts {
 	id: string; // идентификатор карточки
 	description: string; // описание карточки
 	image: string; // ссылка на изображение
@@ -13,7 +13,7 @@ export interface IItemsProduct {
 //Интерфейс открытой для просмотра карточки товара
 
 export interface ICardsData {
-	produts: IItemsProduct[]; // массив карточек
+	produts: IItemsProducts[]; // массив карточек
 	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
 }
 // Интерфейс для модели данных пользователя
@@ -28,17 +28,17 @@ export interface IUserData {
 // интерфейс для каталога товара
 
 export interface ICatalog {
-	products: IItemsProduct[]; // массив карточек
+	products: IItemsProducts[]; // массив карточек
 	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
-	getCatalog: ICatalog;
 	showOneItem(item: string): void; //открываем карточку для просмотра по id
-	getItemsProduct(): IItemsProduct[]; //получаем массив карточек с сервера
-	saveItemsProduct(): IItemsProduct[]; //сохраняем массив карточек
+	getItemsProduct(): IItemsProducts[]; //получаем массив карточек с сервера
+	saveItemsProduct(): IItemsProducts[]; //сохраняем массив карточек
 }
 
 // Интерфейс для корзины
 export interface IBasket {
-	items: IItemsProduct[]; // карточки в корзине
+	items: IItemsProducts[]; // карточки в корзине
+	total: number | null; //общая сумма товаров, добавленных в корзину
 	add(id: string): void; // добавить карточку в корзину
 	remove(id: string): void; // удалить карточку из корзины
 	resetBasket(): void; // очистить корзину
@@ -50,7 +50,7 @@ export interface IResOred {
 	adress: string; // адрес доставки
 	email: string; // почта
 	mobile: string; // телефон
-	items: IItemsProduct[]; // массив карточек
+	items: IItemsProducts[]; // массив карточек
 	total: number | null; // итого, что находится в корзине
 }
 
@@ -77,4 +77,4 @@ export type IUserModal = Pick<IUserData, `email` | `mobile`>;
 export type IOrderSuccessPopup = Pick<IResOred, 'total'>;
 
 //принимаемый тип данных для отображения добавленного товара(карточки) в корзине
-export type IPopupItemInBacket = Pick<IItemsProduct, 'title' | 'price'>;
+export type IPopupItemInBacket = Pick<IItemsProducts, 'title' | 'price'>;
