@@ -1,6 +1,6 @@
 import exp from 'constants';
 
-//Интерфейс для карточки продуктов
+//Интерфейс для карточки продукта
 export interface IItemsProducts {
 	id: string; // идентификатор карточки
 	description: string; // описание карточки
@@ -10,48 +10,36 @@ export interface IItemsProducts {
 	price: number; // цена товара
 }
 
-//Интерфейс открытой для просмотра карточки товара
-
-export interface ICardsData {
-	produts: IItemsProducts[]; // массив карточек
-	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
-}
 // Интерфейс для модели данных пользователя
-export interface IUserData {
+export interface IUser {
 	email: string; // почта
 	mobile: string; // телефон
 	adress: string; // адрес
 	typePay: ChoicePay; // выбранный способ оплаты
-	getUserData: IUserData; // данные пользователя
+	products: string[]; // массив продуктов
+	total: number | null; //общая сумма товаров, добавленных в корзину
+	checkValidation(data: Record<keyof TForm, string | number>): boolean; //проверка валидации формы
 }
 
-// интерфейс для каталога товара
+// интерфейс состояния сайта
 
-export interface ICatalog {
+export interface ChechedState {
 	products: IItemsProducts[]; // массив карточек
 	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
-	showOneItem(item: string): void; //открываем карточку для просмотра по id
-	getItemsProduct(): IItemsProducts[]; //получаем массив карточек с сервера
-	saveItemsProduct(): IItemsProducts[]; //сохраняем массив карточек
+	basket: IItemsProducts[]; // массив карточек в корзине;
+	order: IUser; // данные пользователя
+	showOneItem: (product: IItemsProducts[], id: string) => void; //открываем карточку для просмотра по id
+	addItems: (productId: string, payloader: Function | null) => void; //добавляем карточку в корзину используя id
+	updateItem: (product: IItemsProducts, payloader: Function | null) => void; //обновляем карточку
+	saveItemsProduct: () => IItemsProducts[]; //сохраняем массив карточек
+	removeItemsInBasket: (productId: string, payloader: Function | null) => void; //удаляем карточку из корзины используя id
+	clearBasket: () => void; //очищаем корзину
 }
 
-// Интерфейс для корзины
-export interface IBasket {
-	items: IItemsProducts[]; // карточки в корзине
-	total: number | null; //общая сумма товаров, добавленных в корзину
-	add(id: string): void; // добавить карточку в корзину
-	remove(id: string): void; // удалить карточку из корзины
-	resetBasket(): void; // очистить корзину
-}
-
-//Интерфейс для  заказа
+//Интерфейс для получения итогов заказа
 export interface IResOred {
-	typePay: ChoicePay; // тип оплаты
-	adress: string; // адрес доставки
-	email: string; // почта
-	mobile: string; // телефон
-	items: IItemsProducts[]; // массив карточек
-	total: number | null; // итого, что находится в корзине
+	id: string; // идентификатор заказа
+	total: number | null; //общая сумма товаров, добавленных в корзину
 }
 
 // принимаемый тип данных для опции выбора способа оплаты
@@ -65,16 +53,8 @@ export type Tcategory =
 	| 'кнопка'
 	| 'хард-скилл';
 
-//Работа с модальным окном
+// принимаемый тип данных для модального окна с информацией о пользователе
+export type TForm = Pick<IUser, 'email' | 'mobile' | 'adress' | 'typePay'>;
 
-// принимаемый тип данных  для модального окна со способом оплаты
-export type IPaymentModal = Pick<IUserData, `adress`>;
-
-//принимаемый тип данных для модального окна с информацией о пользователе
-export type IUserModal = Pick<IUserData, `email` | `mobile`>;
-
-//принимаемый тип данных  для модального окна с информацией о успешном совершении заказа
-export type IOrderSuccessPopup = Pick<IResOred, 'total'>;
-
-//принимаемый тип данных для отображения добавленного товара(карточки) в корзине
-export type IPopupItemInBacket = Pick<IItemsProducts, 'title' | 'price'>;
+// принимаемый тип данных для отображения модального окна с успшойм совершением заказа
+export type TResult = Pick<IResOred, 'total'>;
