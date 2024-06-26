@@ -47,75 +47,57 @@ yarn build
 
 # Данные и типы данных, используемые в приложении
 
-### Интерфейс для карточки товара
+### Интерфейс для единицы товара
 
 ```
 
-export interface IItemsProduct {
-id: string; // идентификатор карточки
-description: string; // описание карточки
-image: string; // ссылка на изображение
-title: string; // название товара
-category: Tcategory; // категория товара
-price: number; // цена товара
+export interface IItemsProducts {
+	id: string; - идентификатор карточки
+	description: string; - описание карточки
+	image: string; - ссылка на изображение
+	title: string; - название товара
+	category: Tcategory; - категория товара
+	price: number; - цена товара
 }
 ```
 
-### Интерфейс открытой для просмотра карточки товара
+### Интерфейс для данных о пользователе
 
 ```
-export interface ICardsData {
-produts: IItemsProduct[]; // массив карточек
-show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
+export interface IUser{
+    email: string; - почта
+	mobile: string; - телефон
+	adress: string; - адрес
+	typePay: ChoicePay; - выбранный способ оплаты
+	products: string[]; // массив продуктов
+	total: number | null; - общая сумма товаров, добавленных в корзину
+	checkValidation(data: Record<keyof TForm, string | number>): boolean; - проверка валидации формы
 }
 ```
 
-### Интерфейс для модели данных об пользователе
+### Интерфейс состояния сайта
 
 ```
-export interface IUserData {
-email: string; // почта
-mobile: string; // телефон
-adress: string; // адрес
-typePay: ChoicePay; // выбранный способ оплаты
-getUserData: IUserData; // данные пользователя
+export interface ChechedState {
+	products: IItemsProducts[]; // массив карточек
+	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
+	basket: IItemsProducts[]; // массив карточек в корзине;
+	order: IUser; // данные пользователя
+	showOneItem: (product: IItemsProducts[], id: string) => void; //открываем карточку для просмотра по id
+	addItems: (productId: string, payloader: Function | null) => void; //добавляем карточку в корзину используя id
+	updateItem: (product: IItemsProducts, payloader: Function | null) => void; //обновляем карточку
+	saveItemsProduct: () => IItemsProducts[]; //сохраняем массив карточек
+	removeItemsInBasket: (productId: string, payloader: Function | null) => void; //удаляем карточку из корзины используя id
+	clearBasket: () => void; //очищаем корзину
 }
 ```
 
-### Интерфейс для каталога товара
-
-```
-export interface ICatalog {
-products: IItemsProduct[]; // массив карточек
-show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
-getCatalog: ICatalog;
-showOneItem(item: string): void; //открываем карточку для просмотра по id
-getItemsProduct(): IItemsProduct[]; //получаем массив карточек с сервера
-saveItemsProduct(): IItemsProduct[]; //сохраняем массив карточек
-}
-```
-
-### Интерфейс для корзины
-
-```
-export interface IBasket {
-items: IItemsProduct[]; // карточки в корзине
-add(id: string): void; // добавить карточку в корзину
-remove(id: string): void; // удалить карточку из корзины
-resetBasket(): void; // очистить корзину
-}
-```
-
-### Интерфейс для заказа
+### Интерфейс для получения итогов заказа
 
 ```
 export interface IResOred {
-typePay: ChoicePay; // тип оплаты
-adress: string; // адрес доставки
-email: string; // почта
-mobile: string; // телефон
-items: IItemsProduct[]; // массив карточек
-total: number | null; // итого, что находится в корзине
+	id: string; // идентификатор заказа
+	total: number | null; //общая сумма товаров, добавленных в корзину
 }
 ```
 
@@ -124,18 +106,22 @@ total: number | null; // итого, что находится в корзине
 ### Принимаемый тип данных для опции выбора способа оплаты
 
 ```
+
 export type ChoicePay = 'card' | 'cash';
+
 ```
 
 ### Принимаемый тип данных для категории товара
 
 ```
+
 export type Tcategory =
-	| 'софт-скилл'
-	| 'другое'
-	| 'дополнительное'
-	| 'кнопка'
-	| 'хард-скилл';
+| 'софт-скилл'
+| 'другое'
+| 'дополнительное'
+| 'кнопка'
+| 'хард-скилл';
+
 ```
 
 # Архитектура приложения
@@ -186,18 +172,21 @@ export type Tcategory =
 Содержит следующие поля:
 
 ```
+
     email: string; // хранит данные почты пользователя
-	mobile: string; // хранит данные телефона пользователя
-	adress: string; // хранит адрес пользователя
-	typePay: ChoicePay; // хранит выбранный способ оплаты пользователя
+    mobile: string; // хранит данные телефона пользователя
+    adress: string; // хранит адрес пользователя
+    typePay: ChoicePay; // хранит выбранный способ оплаты пользователя
 
 ```
 
 Класс UserDate также имеет следующие методы:
 
 ```
+
 checkValidation(data: Record<keyof TForm, string | number>): boolean; //проверка валидации формы
 функция get() - для доступа и set() - для работы со свойствами объекта-инстанса этого класса
+
 ```
 
 ## Класс ChechedStateData
@@ -207,10 +196,12 @@ checkValidation(data: Record<keyof TForm, string | number>): boolean; //пров
 В полях класса хранятся следующие данные:
 
 ```
-	products: IItemsProducts[]; - массив карточек
-	show: string | null; - указатель на ту карточку, которую мы хотим просмотреть
-	basket: IItemsProducts[]; - массив карточек в корзине;
-	order: IUser; - данные пользователя
+
+    products: IItemsProducts[]; - массив карточек
+    show: string | null; - указатель на ту карточку, которую мы хотим просмотреть
+    basket: IItemsProducts[]; - массив карточек в корзине;
+    order: IUser; - данные пользователя
+
 ```
 
 ### Методы класса для взаимодействия с данными:
@@ -248,6 +239,7 @@ checkValidation(data: Record<keyof TForm, string | number>): boolean; //пров
 Список событий, которые могут генерироваться в системе:
 
 ```
+
 -cardsItems:changed - изменение массива карточек товаров.
 
 -basket:open- открытие модального окна с содержимым корзины.
@@ -255,11 +247,13 @@ checkValidation(data: Record<keyof TForm, string | number>): boolean; //пров
 -basketData:changed - изменение данных в корзине товаров
 
 -userInfoUpgrade - изменение данных о пользователе (adress,mobile,email)
+
 ```
 
 ### События, при взаимодействии пользователя с интерфейсом
 
 ```
+
 -mobile:input - ввод телефона клиента.
 
 -email:input - ввод почтового адреса клиента.
@@ -275,4 +269,9 @@ checkValidation(data: Record<keyof TForm, string | number>): boolean; //пров
 -choice-pay: change - выбор оплаты
 
 -order:complete - при открытии окна успешной оплаты
+
+```
+
+```
+
 ```

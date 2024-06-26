@@ -10,7 +10,7 @@ export interface IItemsProducts {
 	price: number; // цена товара
 }
 
-// Интерфейс для модели данных пользователя
+// Интерфейс для данных о  пользователе
 export interface IUser {
 	email: string; // почта
 	mobile: string; // телефон
