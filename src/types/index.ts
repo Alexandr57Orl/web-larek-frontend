@@ -23,7 +23,7 @@ export interface IUser {
 
 // интерфейс состояния сайта
 
-export interface ChechedState {
+export interface IChechedState {
 	products: IItemsProducts[]; // массив карточек
 	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
 	basket: IItemsProducts[]; // массив карточек в корзине;
@@ -43,7 +43,7 @@ export interface IResOred {
 }
 
 // принимаемый тип данных для опции выбора способа оплаты
-export type ChoicePay = 'card' | 'cash';
+export type TChoicePay = 'card' | 'cash';
 
 // принимаемый тип данных для категории товара
 export type Tcategory =
