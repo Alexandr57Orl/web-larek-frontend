@@ -15,7 +15,7 @@ export interface IUser {
 	email: string; // почта
 	mobile: string; // телефон
 	adress: string; // адрес
-	typePay: ChoicePay; // выбранный способ оплаты
+	typePay: TChoicePay; // выбранный способ оплаты
 	products: string[]; // массив продуктов
 	total: number | null; //общая сумма товаров, добавленных в корзину
 	checkValidation(data: Record<keyof TForm, string | number>): boolean; //проверка валидации формы
