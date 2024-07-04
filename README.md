@@ -100,6 +100,16 @@ export interface IResOred {
 }
 ```
 
+```
+### Интерфейс корзины
+
+export interface IBasket {
+	items: IItemsProducts[];
+	total: number | null;
+	resetBasket(): void; - очищаем корзину
+}
+```
+
 # Общие типы для приложения
 
 ### Принимаемый тип данных для опции выбора способа оплаты

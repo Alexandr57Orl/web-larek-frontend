@@ -36,6 +36,14 @@ export interface IChechedState {
 	clearBasket: () => void; //очищаем корзину
 }
 
+// интерфейс корзины
+
+export interface IBasket {
+	items: IItemsProducts[];
+	total: number | null;
+	resetBasket(): void; //очищаем корзину
+}
+
 //Интерфейс для получения итогов заказа
 export interface IResOred {
 	id: string; // идентификатор заказа
