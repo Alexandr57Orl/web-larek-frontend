@@ -1,5 +1,3 @@
-import exp from 'constants';
-
 //Интерфейс для карточки продукта
 export interface IItemsProducts {
 	id: string; // идентификатор карточки
@@ -7,7 +5,7 @@ export interface IItemsProducts {
 	image: string; // ссылка на изображение
 	title: string; // название товара
 	category: Tcategory; // категория товара
-	price: number; // цена товара
+	price: number | null; // цена товара
 }
 
 // Интерфейс для данных о  пользователе
@@ -18,7 +16,6 @@ export interface IUser {
 	typePay: TChoicePay; // выбранный способ оплаты
 	products: string[]; // массив продуктов
 	total: number | null; //общая сумма товаров, добавленных в корзину
-	checkValidation(data: Record<keyof TForm, string | number>): boolean; //проверка валидации формы
 }
 
 // интерфейс состояния сайта
@@ -29,10 +26,10 @@ export interface IChechedState {
 	basket: IItemsProducts[]; // массив карточек в корзине;
 	order: IUser; // данные пользователя
 	showOneItem: (product: IItemsProducts[], id: string) => void; //открываем карточку для просмотра по id
-	addItems: (productId: string, payloader: Function | null) => void; //добавляем карточку в корзину используя id
+	addItemInBasket: (productId: string, payloader: Function | null) => void; //добавляем карточку в корзину используя id
 	updateItem: (product: IItemsProducts, payloader: Function | null) => void; //обновляем карточку
 	saveItemsProduct: () => IItemsProducts[]; //сохраняем массив карточек
-	removeItemsInBasket: (productId: string, payloader: Function | null) => void; //удаляем карточку из корзины используя id
+	removeItemInBasket: (productId: string, payloader: Function | null) => void; //удаляем карточку из корзины используя id
 	clearBasket: () => void; //очищаем корзину
 }
 
@@ -50,8 +47,52 @@ export interface IResOred {
 	total: number | null; //общая сумма товаров, добавленных в корзину
 }
 
+// Интерфейс карточки
+
+export interface ICard {
+	title: string;
+	price: number | null;
+	id: string;
+	description: string;
+	image?: string;
+	category?: Tcategory;
+	deleteItemBtn?: string;
+	indexCard?: number;
+}
+
+export interface IPage {
+	catalog: HTMLElement[];
+	basket: HTMLElement;
+	counter: HTMLElement;
+	locked: boolean;
+}
+
+export interface IModalData {
+	content: HTMLElement;
+}
+
+export interface IFormState {
+	valid: boolean;
+	errors: string[];
+}
+
+export interface IBasketCheck {
+	items: HTMLElement[];
+	total: number;
+}
+
+export interface ISuccefullPopap {
+	total: number;
+}
+
+export interface ISuccessActions {
+	onClick: () => void;
+}
 // принимаемый тип данных для опции выбора способа оплаты
-export type TChoicePay = 'card' | 'cash';
+export type TChoicePay = 'card' | 'cash' | '';
+
+//интерфейс для валидации ошибок
+export type IFormValidateErrors = Partial<Record<keyof IUser, string>>;
 
 // принимаемый тип данных для категории товара
 export type Tcategory =
