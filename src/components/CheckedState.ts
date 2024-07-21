@@ -9,10 +9,10 @@ import {
 } from '../types';
 import { EventEmitter, IEvents } from './base/events';
 
-export class ChechedState extends Model<IChechedState> {
+export class CheckedState extends Model<IChechedState> {
 	products: IItemsProducts[] = [];
 	show: IItemsProducts;
-	basket: IItemsProducts[] = [];
+	basketItems: IItemsProducts[] = [];
 	total: number | null = null;
 	order: IUser = {
 		email: '', // почта
@@ -23,27 +23,38 @@ export class ChechedState extends Model<IChechedState> {
 		total: 0, // итоговая сумма
 	};
 
+	formErrors: IFormValidateErrors = {};
+
 	showOneItem(product: IItemsProducts[], id: string) {
 		return (this.show = product.filter((item) => item.id === id)[0]);
 	}
 
-	addItemInBasket(item: IItemsProducts) {
-		this.basket.push(item);
-		this.emitChanges('basketData:changed', { basket: this.basket });
-	}
 
-	removeItemInBasket(id: string) {
-		this.basket = this.basket.filter((item) => item.id !== id);
-		this.emitChanges('basketData:changed', { basket: this.basket });
-	}
+	//добавление карточки в корзину
+	addItemtoBasket(item: IItemsProducts) {
+        this.basketItems.push(item)
+        this.emitChanges('basketData:changed', {basketList: this.basketItems} );
+    }
+        
+    //удаление товара из корзины
+    removeItemFromBasket(id: string) {
+        this.basketItems = this.basketItems.filter(item => item.id !== id);
+        this.emitChanges('basketData:changed', {basketList: this.basketItems} );
+    }  
 
+
+	 
+
+	getItemsBasket(): IItemsProducts[] {
+		return this.basketItems;
+	}
 	clearBasket() {
-		this.basket = [];
-		this.emitChanges('basketData:changed', { basket: this.basket });
+		this.basketItems = [];
+		this.emitChanges('basketData:changed', { basket: this.basketItems });
 	}
 
 	getCounterBasket(): number {
-		return this.basket.length;
+		return this.basketItems.length;
 	}
 
 	set _total(value: number) {
@@ -52,7 +63,7 @@ export class ChechedState extends Model<IChechedState> {
 
 	getTotalPrice(): number {
 		let price = 0;
-		this.basket.forEach((item) => {
+		this.basketItems.forEach((item) => {
 			price += item.price;
 		});
 		return price;
@@ -69,4 +80,25 @@ export class ChechedState extends Model<IChechedState> {
 		this.products = items;
 		this.emitChanges('Info: loaded', { productList: this.products });
 	}
+
+	setPreviewPopap(id: string){
+		const cardItem = this.showOneItem(this.products, id)
+		this.show = cardItem;
+		this.emitChanges('preview:changed');
+	}  
+	
+getPreviewPopap() {
+	return this.show;
+}
+
+addOrderId() {
+	if(this.basketItems.length !== 0) {
+		this.order.products = this.basketItems.map((item) => {
+			return item.id
+		},
+		this.emitChanges('datapaymentform:opened'),
+	)
+	}
+}
+
 }

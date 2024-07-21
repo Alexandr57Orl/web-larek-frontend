@@ -1,4 +1,4 @@
-import { ISuccefullPopap, ISuccessActions } from '../types';
+import { ISuccefullPopap } from '../types';
 import { Component } from './base/Component';
 import { ensureElement } from '../utils/utils';
 import { IEvents } from './base/events';
@@ -22,6 +22,6 @@ export class SuccessfulOrder extends Component<ISuccefullPopap> {
 		});
 	}
 	set totalPrice(value: string) {
-		this.setText(this._total, `Списано ${value} синапсов`);
+		this.setText(this._total, `Списано  ${value}  синапсов`);
 	}
 }

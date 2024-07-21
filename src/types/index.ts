@@ -1,5 +1,6 @@
 //Интерфейс для карточки продукта
 export interface IItemsProducts {
+  indexCard: number;
 	id: string; // идентификатор карточки
 	description: string; // описание карточки
 	image: string; // ссылка на изображение
