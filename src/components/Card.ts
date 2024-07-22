@@ -3,7 +3,7 @@ import { ensureElement } from '../utils/utils';
 import { IEvents } from './base/events';
 import { ICard } from '../types';
 
-const parametrsWithCategory = {
+export const parametrsWithCategory = {
 	'софт-скил': 'soft',
 	другое: 'other',
 	дополнительное: 'additional',
@@ -21,7 +21,7 @@ export class Card extends Component<ICard> {
 	protected _indexCard?: HTMLElement;
 	protected _id: string;
 	protected event?: IEvents;
-	protected _deleteBtn?: HTMLButtonElement;
+	protected _deleteButton?: HTMLButtonElement;
 
 	constructor(
 		protected blockName: string,
@@ -30,24 +30,25 @@ export class Card extends Component<ICard> {
 	) {
 		super(container);
 
+		this._category = container.querySelector(`.${blockName}__category`);
+		this._button = container.querySelector(`.${blockName}__button`);
+		this._indexCard = container.querySelector(`.basket__item-index`);
+		this._deleteButton = container.querySelector(`.basket__item-delete`);
 		this._title = ensureElement<HTMLElement>(`.${blockName}__title`, container);
 		this._description = container.querySelector(`.${blockName}__text`);
 		this._image = container.querySelector(`.${blockName}__image`);
 		this._price = container.querySelector(`.${blockName}__price`);
-		this._category = container.querySelector(`.${blockName}__category`);
-		this._button = container.querySelector(`.${blockName}__button`);
-		this._button = container.querySelector(`.basket__item-index`);
-		this._deleteBtn = container.querySelector(`.basket__item-delete`);
+
 		this.event = event;
 
 		if (this._button) {
-			if (this._deleteBtn) {
+			if (this._deleteButton) {
 				this._button.addEventListener('click', () => {
-					this.event.emit('item:deleteItemFromBasket', { id: this.id });
+					this.event.emit('item:removeItemBasket', { id: this.id });
 				});
 			} else {
 				this._button.addEventListener('click', () => {
-					this.event.emit('item:AddItemToBasket', { id: this._id });
+					this.event.emit('item:correctBasket', { id: this._id });
 				});
 			}
 		} else {
@@ -60,7 +61,19 @@ export class Card extends Component<ICard> {
 	set title(value: string) {
 		this.setText(this._title, value);
 	}
+	get cardButton(): HTMLButtonElement {
+		if (this._button) {
+			return this._button;
+		} else {
+			console.log('error');
+		}
+	}
 
+	set textButton(value: string) {
+		if (this._button) {
+			this.setText(this._button, value);
+		}
+	}
 	set description(value: string) {
 		this.setText(this._description, value);
 	}
@@ -70,23 +83,24 @@ export class Card extends Component<ICard> {
 	}
 
 	set price(value: number | null) {
-		this.setText(
-			this._price,
-			value ? `${value.toString()} синапсов` : 'Бесценно'
-		);
-		this.buttonVisibility(value);
-	}
-
-	buttonVisibility(value: number | null) {
 		if (value === null) {
-			if (this._button) {
-				this._button.disabled = true;
-			}
+			this.setDisabled(this._button, true);
+			this.setText(this._price, 'Бесценно');
+		} else {
+			this.setText(this._price, `${value + ' ' + 'синапсов'}`);
 		}
 	}
 
-	get price(): number {
-		return Number(this._price.textContent || '');
+	set category(value: string) {
+		this.categoryColor(
+			parametrsWithCategory[value as keyof typeof parametrsWithCategory]
+		);
+		this.setText(this._category, value);
+	}
+
+	categoryColor(value: string) {
+		const className = `${this.blockName}__category_${value}`;
+		this.toggleClass(this._category, className, true);
 	}
 
 	set id(id) {
@@ -103,31 +117,5 @@ export class Card extends Component<ICard> {
 
 	set indexCard(value: number) {
 		this.setText(this._indexCard, value.toString());
-	}
-
-	set category(value: string) {
-		this.paramCategory(
-			parametrsWithCategory[value as keyof typeof parametrsWithCategory]
-		);
-		this.setText(this._category, value);
-	}
-
-	paramCategory(value: string) {
-		const className = `${this.blockName}__category_${value}`;
-		this.toggleClass(this._category, className, true);
-	}
-
-	get cardButton(): HTMLButtonElement {
-		if (this._button) {
-			return this._button;
-		} else {
-			console.log('error');
-		}
-	}
-
-	set textButton(value: string) {
-		if (this._button) {
-			this.setText(this._button, value);
-		}
 	}
 }

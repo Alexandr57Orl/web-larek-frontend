@@ -21,17 +21,26 @@ export class Modal extends Component<IModalData> {
 		this._content.addEventListener('click', (event) => event.stopPropagation());
 	}
 
+	// Обработчик в виде стрелочного метода, чтобы не терять контекст `this`
+	enterEscape = (evt: KeyboardEvent) => {
+		if (evt.key === 'Escape') {
+			this.closeModal();
+		}
+	};
+
 	set content(value: HTMLElement) {
 		this._content.replaceChildren(value);
 	}
 	openModal() {
 		this.toggleClass(this.container, 'modal_active', true);
 		this.events.emit('modal:open');
+		document.addEventListener('keydown', this.enterEscape);
 	}
 
 	closeModal() {
 		this.toggleClass(this.container, 'modal_active', false);
 		this.events.emit('modal:close');
+		document.removeEventListener('keydown', this.enterEscape);
 	}
 
 	render(data: IModalData): HTMLElement {

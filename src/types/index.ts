@@ -1,5 +1,7 @@
 //Интерфейс для карточки продукта
 export interface IItemsProducts {
+	find(arg0: (item: any) => boolean): unknown;
+	indexCard: number;
 	id: string; // идентификатор карточки
 	description: string; // описание карточки
 	image: string; // ссылка на изображение
@@ -11,9 +13,9 @@ export interface IItemsProducts {
 // Интерфейс для данных о  пользователе
 export interface IUser {
 	email: string; // почта
-	mobile: string; // телефон
-	adress: string; // адрес
-	typePay: TChoicePay; // выбранный способ оплаты
+	phone: string; // телефон
+	address: string; // адрес
+	typePay: string; // выбранный способ оплаты
 	products: string[]; // массив продуктов
 	total: number | null; //общая сумма товаров, добавленных в корзину
 }
@@ -63,7 +65,7 @@ export interface ICard {
 export interface IPage {
 	catalog: HTMLElement[];
 	basket: HTMLElement;
-	counter: HTMLElement;
+	counter: number;
 	locked: boolean;
 }
 
@@ -89,7 +91,6 @@ export interface ISuccessActions {
 	onClick: () => void;
 }
 // принимаемый тип данных для опции выбора способа оплаты
-export type TChoicePay = 'card' | 'cash' | '';
 
 //интерфейс для валидации ошибок
 export type IFormValidateErrors = Partial<Record<keyof IUser, string>>;
@@ -103,7 +104,7 @@ export type Tcategory =
 	| 'хард-скилл';
 
 // принимаемый тип данных для модального окна с информацией о пользователе
-export type TForm = Pick<IUser, 'email' | 'mobile' | 'adress' | 'typePay'>;
+export type TForm = Pick<IUser, 'email' | 'phone' | 'address' | 'typePay'>;
 
 // принимаемый тип данных для отображения модального окна с успшойм совершением заказа
 export type TResult = Pick<IResOred, 'total'>;

@@ -9,35 +9,35 @@ export class ChoicePayAndAdress extends Form<TForm> {
 
 	constructor(protected container: HTMLFormElement, protected events: IEvents) {
 		super(container, events);
-		this._adress = container.querySelector(
-			'input[name=adress]'
-		) as HTMLInputElement;
-		this._cash = container.querySelector(
-			'input[name=cash]'
-		) as HTMLInputElement;
-		this._card = container.querySelector(
-			'input[name=card]'
-		) as HTMLInputElement;
-	}
+		this._cash = container.querySelector('button[name="cash"]');
+		this._adress = container.querySelector('input[name="address"]');
+		this._card = container.querySelector('button[name="card"]');
 
-	clickCash(isvalue: boolean) {
-		this.toggleClass(this._cash, 'active', isvalue);
+		this._cash.addEventListener('click', () => this.choosePaymethod('cash'));
+		this._card.addEventListener('click', () => this.choosePaymethod('card'));
+		this._adress.addEventListener('input', () =>
+			this.events.emit('edit-adress:input')
+		);
 	}
 
 	clickCard(isvalue: boolean) {
-		this.toggleClass(this._card, 'active', isvalue);
+		this.toggleClass(this._card, 'button_alt-active', isvalue);
 	}
 
-	choosePaymethod(pay: string) {
-		const methodCash = this._cash.classList.contains('button_alt-active');
+	clickCash(isvalue: boolean) {
+		this.toggleClass(this._cash, 'button_alt-active', isvalue);
+	}
+
+	choosePaymethod(typePay: string) {
+		const methodCash = this._card.classList.contains('button_alt-active');
 		const methodCard = this._cash.classList.contains('button_alt-active');
-		if (pay === 'cash') {
+		if (typePay === 'cash') {
 			this.clickCash(methodCash);
-			this.clickCard(!methodCard);
+			this.clickCard(!methodCash);
 			this.events.emit('paymentOnLine:selected');
-		} else if (pay === 'card') {
+		} else if (typePay === 'card') {
 			this.clickCard(methodCard);
-			this.clickCash(!methodCash);
+			this.clickCash(!methodCard);
 			this.events.emit('paymentCash:selected');
 		}
 	}
