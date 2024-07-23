@@ -23,7 +23,6 @@ const cardTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
 const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
 const succesTemplate = ensureElement<HTMLTemplateElement>('#success');
-const cardCatalogTemplaye = ensureElement<HTMLTemplateElement>('#card-catalog');
 const previewCardTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
 const justBasketTemplate = ensureElement<HTMLTemplateElement>('#basket');
@@ -247,8 +246,8 @@ events.on('basketData:changed', (data: { basketList: IItemsProducts[] }) => {
 events.on('datapaymentform:opened', () => {
 	modal.render({
 		content: payAndDress.render({
-			address: 'ass',
-			typePay: '',
+			address: '',
+			payment: '',
 			valid: false,
 			errors: [],
 		}),
@@ -263,7 +262,7 @@ events.on('paymentCash:selected', () => {
 	checkedState.setDataPay('cash');
 });
 
-//попап с указанием адресса и типа оплаты для заказа
+// следующий пункт, открытие модального окна с контактными данными
 events.on(`order:submit`, () => {
 	modal.render({
 		content: contactsForm.render({
@@ -274,9 +273,9 @@ events.on(`order:submit`, () => {
 });
 
 events.on('formErrors:change', (errors: Partial<TForm>) => {
-	const { email, phone, address, typePay } = errors;
-	payAndDress.valid = !address && !typePay;
-	payAndDress.errors = Object.values({ address, typePay })
+	const { email, phone, address, payment } = errors;
+	payAndDress.valid = !address && !payment;
+	payAndDress.errors = Object.values({ address, payment })
 		.filter((i) => !!i)
 		.join(' , ');
 	contactsForm.valid = !email && !phone;
@@ -287,9 +286,9 @@ events.on('formErrors:change', (errors: Partial<TForm>) => {
 
 // сначала валидируем все формы контакты и адрес
 events.on('formErrors:change', (errors: Partial<TForm>) => {
-	const { email, phone, address, typePay } = errors;
-	payAndDress.valid = !address && !typePay;
-	payAndDress.errors = Object.values({ address, typePay })
+	const { email, phone, address, payment } = errors;
+	payAndDress.valid = !address && !payment;
+	payAndDress.errors = Object.values({ address, payment })
 		.filter((i) => !!i)
 		.join('; ');
 	contactsForm.valid = !email && !phone;
@@ -329,7 +328,7 @@ events.on(`contacts:submit`, () => {
 			console.log(err);
 			modal.render({
 				content: createElement<HTMLParagraphElement>('p', {
-					textContent: 'Ошибка сервера. Попробуйте позже',
+					textContent: 'Ошибка сервера. Мы уже работаем над этим',
 				}),
 			});
 		});

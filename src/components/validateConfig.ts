@@ -1,3 +1,5 @@
+// хотел валидацию сделать отдельно если это как-то возможно, для развития поясните пожалуйста
+
 // import { TForm } from '../types/index';
 // import { events } from '../index';
 // import { payAndDress, contactsForm } from '..';
@@ -5,25 +7,25 @@
 
 // // сначала валидируем все формы контакты и адрес
 // events.on('formErrors:change', (errors: Partial<TForm>) => {
-// 	const { email, mobile, adress, typePay } = errors;
-// 	payAndDress.valid = !adress && !typePay;
-// 	payAndDress.errors = Object.values({ adress, typePay })
+// 	const { email, phone, address, payment } = errors;
+// 	payAndDress.valid = !address && !payment;
+// 	payAndDress.errors = Object.values({ address, payment })
 // 		.filter((i) => !!i)
 // 		.join('; ');
-// 	contactsForm.valid = !email && !mobile;
-// 	contactsForm.errors = Object.values({ mobile, email })
+// 	contactsForm.valid = !email && !phone;
+// 	contactsForm.errors = Object.values({ phone, email })
 // 		.filter((i) => !!i)
 // 		.join('; ');
 // });
 
 // events.on('formErrors:change', (errors: Partial<TForm>) => {
-// 	const { email, mobile, adress, typePay } = errors;
-// 	payAndDress.valid = !adress && !typePay;
-// 	payAndDress.errors = Object.values({ adress, typePay })
+// 	const { email, phone, address, payment } = errors;
+// 	payAndDress.valid = !address && !payment;
+// 	payAndDress.errors = Object.values({ address, payment })
 // 		.filter((i) => !!i)
 // 		.join('; ');
-// 	contactsForm.valid = !email && !mobile;
-// 	contactsForm.errors = Object.values({ mobile, email })
+// 	contactsForm.valid = !email && !phone;
+// 	contactsForm.errors = Object.values({ phone, email })
 // 		.filter((i) => !!i)
 // 		.join('; ');
 // });

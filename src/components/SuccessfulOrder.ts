@@ -22,7 +22,7 @@ export class SuccessfulOrder extends Component<ISuccefullPopap> {
 			this.events.emit('order:created');
 		});
 	}
-	set totalPrice(value: string) {
+	set total(value: string) {
 		this.setText(this._total, `Списано  ${value}  синапсов`);
 	}
 }

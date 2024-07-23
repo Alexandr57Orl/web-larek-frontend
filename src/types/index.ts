@@ -1,6 +1,5 @@
 //Интерфейс для карточки продукта
 export interface IItemsProducts {
-	find(arg0: (item: any) => boolean): unknown;
 	indexCard: number;
 	id: string; // идентификатор карточки
 	description: string; // описание карточки
@@ -15,8 +14,8 @@ export interface IUser {
 	email: string; // почта
 	phone: string; // телефон
 	address: string; // адрес
-	typePay: string; // выбранный способ оплаты
-	products: string[]; // массив продуктов
+	payment: string; // выбранный способ оплаты
+	items: string[]; // массив продуктов
 	total: number | null; //общая сумма товаров, добавленных в корзину
 }
 
@@ -104,7 +103,7 @@ export type Tcategory =
 	| 'хард-скилл';
 
 // принимаемый тип данных для модального окна с информацией о пользователе
-export type TForm = Pick<IUser, 'email' | 'phone' | 'address' | 'typePay'>;
+export type TForm = Pick<IUser, 'email' | 'phone' | 'address' | 'payment'>;
 
 // принимаемый тип данных для отображения модального окна с успшойм совершением заказа
 export type TResult = Pick<IResOred, 'total'>;

@@ -22,7 +22,6 @@ export class AppApi extends Api implements IApi {
 			}))
 		);
 	}
-
 	changeOrder(order: IUser): Promise<IResOred> {
 		return this.post('/order', order).then((data: IResOred) => data);
 	}

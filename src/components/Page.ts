@@ -21,6 +21,8 @@ export class Page extends Component<IPage> {
 			this.events.emit('basketList:opened');
 		});
 	}
+
+	// счётчик на главной
 	set counter(value: number) {
 		this.setText(this._counter, String(value));
 	}

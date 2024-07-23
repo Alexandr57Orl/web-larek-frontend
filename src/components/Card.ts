@@ -24,7 +24,7 @@ export class Card extends Component<ICard> {
 	protected _deleteButton?: HTMLButtonElement;
 
 	constructor(
-		protected blockName: string,
+		protected blockName: string, // из проекта оно тебе надо
 		container: HTMLElement,
 		event: IEvents
 	) {
@@ -58,30 +58,30 @@ export class Card extends Component<ICard> {
 		}
 	}
 
+	// устанавливаем заголовок карточки
 	set title(value: string) {
 		this.setText(this._title, value);
 	}
-	get cardButton(): HTMLButtonElement {
-		if (this._button) {
-			return this._button;
-		} else {
-			console.log('error');
-		}
-	}
+
+	// устанавливаем текст в кнопке
 
 	set textButton(value: string) {
 		if (this._button) {
 			this.setText(this._button, value);
 		}
 	}
+
+	// устанавливаем описание карточки
 	set description(value: string) {
 		this.setText(this._description, value);
 	}
 
+	// устанавливаем картинку карточки
 	set image(value: string) {
 		this.setImage(this._image, value);
 	}
 
+	// устанавливаем цену карточки
 	set price(value: number | null) {
 		if (value === null) {
 			this.setDisabled(this._button, true);
@@ -91,31 +91,45 @@ export class Card extends Component<ICard> {
 		}
 	}
 
+	// устанавливаем категорию карточки
 	set category(value: string) {
-		this.categoryColor(
+		this.productCategory(
 			parametrsWithCategory[value as keyof typeof parametrsWithCategory]
 		);
 		this.setText(this._category, value);
 	}
 
-	categoryColor(value: string) {
-		const className = `${this.blockName}__category_${value}`;
-		this.toggleClass(this._category, className, true);
+	get cardButton(): HTMLButtonElement {
+		if (this._button) {
+			return this._button;
+		} else {
+			console.log('error');
+		}
 	}
 
+	// устанавливаем индекс карточки
+	set indexCard(value: number) {
+		this.setText(this._indexCard, value.toString());
+	}
+
+	// устанавливаем id карточки
 	set id(id) {
 		this._id = id;
 	}
 
+	// получаем id карточки
 	get id() {
 		return this._id;
 	}
 
+	// получаем заголовок карточки
 	get title(): string {
 		return this._title.textContent || '';
 	}
 
-	set indexCard(value: number) {
-		this.setText(this._indexCard, value.toString());
+	// метод для установки категории
+	productCategory(value: string) {
+		const className = `${this.blockName}__category_${value}`;
+		this.toggleClass(this._category, className, true);
 	}
 }

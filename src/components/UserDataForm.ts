@@ -12,10 +12,6 @@ export class UserDataForm extends Form<TForm> {
 		this._phone = container.querySelector('input[name="phone"]');
 	}
 
-	get mobile(): string {
-		return this._phone.value;
-	}
-
 	set mobile(value: string) {
 		this._phone.value = value;
 	}
@@ -26,6 +22,10 @@ export class UserDataForm extends Form<TForm> {
 
 	get email(): string {
 		return this._email.value;
+	}
+
+	get mobile(): string {
+		return this._phone.value;
 	}
 
 	resetInformation() {
