@@ -1,6 +1,6 @@
 //Интерфейс для карточки продукта
 export interface IItemsProducts {
-	indexCard: number;
+	indexCard: number; // индекс карточки
 	id: string; // идентификатор карточки
 	description: string; // описание карточки
 	image: string; // ссылка на изображение
@@ -36,7 +36,7 @@ export interface IChechedState {
 
 // интерфейс корзины
 
-export interface IBasket {
+interface IBasket {
 	items: IItemsProducts[];
 	total: number | null;
 	resetBasket(): void; //очищаем корзину
@@ -61,6 +61,7 @@ export interface ICard {
 	indexCard?: number;
 }
 
+// Интерфейс страницы
 export interface IPage {
 	catalog: HTMLElement[];
 	basket: HTMLElement;
@@ -68,30 +69,35 @@ export interface IPage {
 	locked: boolean;
 }
 
+// Интерфейс модального окна
 export interface IModalData {
 	content: HTMLElement;
 }
 
+// Интерфейс формы
 export interface IFormState {
 	valid: boolean;
 	errors: string[];
 }
 
+// Интерфейс для проверки корзины
 export interface IBasketCheck {
 	items: HTMLElement[];
 	total: number;
 }
 
+// Интерфейс для успешного окна
 export interface ISuccefullPopap {
 	total: number;
 }
 
+// Интерфейс для успешного окна
 export interface ISuccessActions {
-	onClick: () => void;
+	totalPrice: number;
 }
 // принимаемый тип данных для опции выбора способа оплаты
 
-//интерфейс для валидации ошибок
+//Тип для валидации ошибок
 export type IFormValidateErrors = Partial<Record<keyof IUser, string>>;
 
 // принимаемый тип данных для категории товара

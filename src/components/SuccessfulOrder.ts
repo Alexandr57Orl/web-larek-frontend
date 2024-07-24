@@ -1,9 +1,9 @@
-import { ISuccefullPopap } from '../types';
+import { ISuccessActions } from '../types';
 import { Component } from './base/Component';
 import { ensureElement } from '../utils/utils';
 import { IEvents } from './base/events';
 
-export class SuccessfulOrder extends Component<ISuccefullPopap> {
+export class SuccessfulOrder extends Component<ISuccessActions> {
 	protected _total: HTMLElement;
 	protected _close: HTMLButtonElement;
 
@@ -22,7 +22,7 @@ export class SuccessfulOrder extends Component<ISuccefullPopap> {
 			this.events.emit('order:created');
 		});
 	}
-	set total(value: string) {
+	set totalPrice(value: string) {
 		this.setText(this._total, `Списано  ${value}  синапсов`);
 	}
 }

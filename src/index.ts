@@ -3,8 +3,8 @@ import './scss/styles.scss';
 import { EventEmitter } from './components/base/events';
 import { ensureElement, cloneTemplate, createElement } from './utils/utils';
 import { AppApi } from './components/AppApi';
-import { API_URL, CDN_URL, settings } from './utils/constants';
-import { Card, parametrsWithCategory } from './components/Card';
+import { API_URL, CDN_URL } from './utils/constants';
+import { Card } from './components/Card';
 import { CheckedState } from './components/CheckedState';
 import type { IItemsProducts, TForm } from './types/index';
 
@@ -64,6 +64,16 @@ api
 			}),
 		});
 	});
+
+// блокировка скролла
+
+events.on('modal:open', () => {
+	page.locked = true;
+});
+
+events.on('modal:close', () => {
+	page.locked = false;
+});
 
 // отрисовка карточек на главном экране сайта
 
@@ -321,7 +331,7 @@ events.on(`contacts:submit`, () => {
 			checkedState.clearAfterOrder();
 			events.emit('orderCreate:success');
 			modal.render({
-				content: successfulOrder.render({ total: res.total }),
+				content: successfulOrder.render({ totalPrice: res.total }),
 			});
 		})
 		.catch((err) => {

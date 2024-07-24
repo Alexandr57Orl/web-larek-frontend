@@ -29,7 +29,7 @@ export class Form<T> extends Component<IFormState> {
 		});
 	}
 
-	protected onInputChange(field: keyof T, value: string) {
+	onInputChange(field: keyof T, value: string) {
 		this.events.emit(`${this.container.name}.${String(field)}:change`, {
 			field,
 			value,

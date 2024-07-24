@@ -58,11 +58,7 @@ export class CheckedState extends Model<IChechedState> {
 
 	//получаем итоговую сумму
 	getTotalPrice(): number {
-		let sum = 0;
-		this.basketItems.forEach((item) => {
-			sum += item.price;
-		});
-		return sum;
+		return this.basketItems.reduce((sum, next) => sum + (next.price ?? 0), 0);
 	}
 
 	//очищает данные заказа после его успешного завершения
@@ -79,7 +75,7 @@ export class CheckedState extends Model<IChechedState> {
 		this.emitChanges('Info: loaded', { productList: this.products });
 	}
 
-	//показываем карточку
+	//показываем Popap
 	setPreviewPopap(id: string) {
 		const cardItem = this.showOneItem(this.products, id);
 		this.show = cardItem;
