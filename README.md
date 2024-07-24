@@ -51,7 +51,7 @@ yarn build
 
 ```
 
-export interface IItemsProducts {
+ interface IItemsProducts {
 	indexCard: number; - индекс карточки
 	id: string; - идентификатор карточки
 	description: string; - описание карточки
