@@ -52,13 +52,13 @@ yarn build
 ```
 
 export interface IItemsProducts {
-	indexCard: number; // индекс карточки
-	id: string; // идентификатор карточки
-	description: string; // описание карточки
-	image: string; // ссылка на изображение
-	title: string; // название товара
-	category: Tcategory; // категория товара
-	price: number | null; // цена товара
+	indexCard: number; - индекс карточки
+	id: string; - идентификатор карточки
+	description: string; - описание карточки
+	image: string; - ссылка на изображение
+	title: string; - название товара
+	category: Tcategory; - категория товара
+	price: number | null; - цена товара
 }
 ```
 
@@ -66,12 +66,12 @@ export interface IItemsProducts {
 
 ```
  interface IUser{
-	email: string; // почта
-	phone: string; // телефон
-	address: string; // адрес
-	payment: string; // выбранный способ оплаты
-	items: string[]; // массив продуктов
-	total: number | null; //общая сумма товаров, добавленных в корзину
+	email: string; - почта
+	phone: string; - телефон
+	address: string; - адрес
+	payment: string; - выбранный способ оплаты
+	items: string[]; - массив продуктов
+	total: number | null; - общая сумма товаров, добавленных в корзину
 }
 ```
 
@@ -79,16 +79,16 @@ export interface IItemsProducts {
 
 ```
  interface IChechedState {
-	products: IItemsProducts[]; // массив карточек
-	show: string | null; // указатель на ту карточку, которую мы хотим просмотреть
-	basket: IItemsProducts[]; // массив карточек в корзине;
-	order: IUser; // данные пользователя
-	showOneItem: (product: IItemsProducts[], id: string) => void; //открываем карточку для просмотра по id
-	addItemInBasket: (productId: string, payloader: Function | null) => void; //добавляем карточку в корзину используя id
-	updateItem: (product: IItemsProducts, payloader: Function | null) => void; //обновляем карточку
-	saveItemsProduct: () => IItemsProducts[]; //сохраняем массив карточек
-	removeItemInBasket: (productId: string, payloader: Function | null) => void; //удаляем карточку из корзины используя id
-	clearBasket: () => void; //очищаем корзину
+	products: IItemsProducts[]; - массив карточек
+	show: string | null; - указатель на ту карточку, которую мы хотим просмотреть
+	basket: IItemsProducts[]; - массив карточек в корзине;
+	order: IUser; - данные пользователя
+	showOneItem: (product: IItemsProducts[], id: string) => void; - открываем карточку для просмотра по id
+	addItemInBasket: (productId: string, payloader: Function | null) => void; - добавляем карточку в корзину используя id
+	updateItem: (product: IItemsProducts, payloader: Function | null) => void; - обновляем карточку
+	saveItemsProduct: () => IItemsProducts[]; - сохраняем массив карточек
+	removeItemInBasket: (productId: string, payloader: Function | null) => void; - удаляем карточку из корзины используя id
+	clearBasket: () => void; - очищаем корзину
 }
 ```
 
@@ -96,8 +96,8 @@ export interface IItemsProducts {
 
 ```
  interface IResOred {
-	id: string; // идентификатор заказа
-	total: number | null; //общая сумма товаров, добавленных в корзину
+	id: string; - идентификатор заказа
+	total: number | null; - общая сумма товаров, добавленных в корзину
 }
 ```
 
@@ -106,7 +106,7 @@ export interface IItemsProducts {
 ```
 
 
-export interface IBasket {
+ interface IBasket {
 	items: IItemsProducts[];
 	total: number | null;
 	resetBasket(): void; - очищаем корзину
@@ -117,8 +117,8 @@ export interface IBasket {
 
 ```
  interface IResOred {
-	id: string; // идентификатор заказа
-	total: number | null; //общая сумма товаров, добавленных в корзину
+	id: string; - идентификатор заказа
+	total: number | null; - общая сумма товаров, добавленных в корзину
 }
 ```
 
