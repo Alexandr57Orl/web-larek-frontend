@@ -37,16 +37,15 @@ export class ChoicePayAndAdress extends Form<TForm> {
 
 	// метод выбора оплаты
 	paymentChange(payment: string) {
-		const methodCash = this._cash.classList.contains('button_alt-active');
-		const methodCard = this._cash.classList.contains('button_alt-active');
+		const isCardSelected = payment === 'card';
+		const isCashSelected = payment === 'cash';
 
-		if (payment === 'card') {
-			this.choiceCard(methodCard);
-			this.choiceCash(!methodCard);
+		this.choiceCard(isCardSelected);
+		this.choiceCash(isCashSelected);
+
+		if (isCardSelected) {
 			this.events.emit('paymentOnLine:selected');
-		} else if (payment === 'cash') {
-			this.choiceCash(!methodCash);
-			this.choiceCard(methodCash);
+		} else if (isCashSelected) {
 			this.events.emit('paymentCash:selected');
 		}
 	}
